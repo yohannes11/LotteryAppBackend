@@ -1,4 +1,4 @@
-package et.com.Lottery.services;
+package et.com.Lottery.service;
 
 import com.cassiomolin.user.domain.User;
 import et.com.Lottery.dao.PasswordHistoryDao;

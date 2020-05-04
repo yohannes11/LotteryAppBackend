@@ -1,7 +1,6 @@
 package et.com.Lottery.dao;
 
 
-
 import et.com.Lottery.model.UsersData;
 
 import javax.ejb.Stateless;
@@ -18,6 +17,7 @@ public class UsersDataDao {
     public void create(UsersData entity) {
         em.persist(entity);
     }
+
     public UsersData createAndReturn(UsersData entity) {
         em.persist(entity);
         return entity;
@@ -50,13 +50,19 @@ public class UsersDataDao {
         }
         return findAllQuery.getResultList();
     }
-    public List<UsersData> searchUsersData(String parameter, Integer startPosition,
-                                         Integer maxResult) {
-        TypedQuery<UsersData> query = em.
-                createQuery("SELECT DISTINCT c FROM UsersData c where c.phoneNumber like:tel or soundex(c.firstName) = soundex(:fname) or soundex(c.lastName) = soundex(:lname) ORDER BY c.id DESC", UsersData.class);
 
-        query.setParameter("fname",  parameter );
-        query.setParameter("lname", parameter );
+    public List<UsersData> searchUsersData(String parameter, Integer startPosition,
+                                           Integer maxResult) {
+        TypedQuery<UsersData> query = em.
+                createQuery("SELECT DISTINCT c FROM UsersData c " +
+                        "left join User u on u.userData=c.id " +
+                        "where c.phoneNumber like:tel or " +
+                        "soundex(u.username) = soundex(:username) or " +
+                        " soundex(c.firstName) = soundex(:fname) or " +
+                        "soundex(c.lastName) = soundex(:lname) ORDER BY c.id DESC", UsersData.class);
+        query.setParameter("fname", parameter);
+        query.setParameter("username", parameter);
+        query.setParameter("lname", parameter);
         query.setParameter("tel", "%" + parameter + "%");
 
         if (startPosition != null) {

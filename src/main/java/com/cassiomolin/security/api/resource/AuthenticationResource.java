@@ -9,7 +9,7 @@ import com.cassiomolin.security.service.UsernamePasswordValidator;
 import com.cassiomolin.user.domain.User;
 import com.cassiomolin.user.service.UserService;
 import et.com.Lottery.dto.restData.Token;
-import et.com.Lottery.services.PasswordHistoryService;
+import et.com.Lottery.service.PasswordHistoryService;
 import io.swagger.annotations.Api;
 
 import javax.annotation.security.PermitAll;
