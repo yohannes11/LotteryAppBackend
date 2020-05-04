@@ -19,6 +19,12 @@ public class StatusInit {
         status.setErrorMessages(errorMessageList);
         return status;
     }
+    public Status singleSuccessInit(String message){
+        Status status = new Status();
+        status.setStatus(true);
+        status.setMessage(message);
+        return status;
+    }
     public Status singleErrorInit(String title, String messageDesc){
         Status status = new Status(false, title, null);
         List<ErrorMessage> errorMessageList = new ArrayList<ErrorMessage>();

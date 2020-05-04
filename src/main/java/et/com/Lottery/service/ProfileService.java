@@ -3,6 +3,7 @@ package et.com.Lottery.service;
 import com.cassiomolin.security.service.PasswordEncoder;
 import com.cassiomolin.user.domain.User;
 import com.cassiomolin.user.service.UserService;
+import et.com.Lottery.convertor.UserConvertor;
 import et.com.Lottery.dao.PasswordHistoryDao;
 import et.com.Lottery.dao.UserDao;
 import et.com.Lottery.dao.UsersDataDao;
@@ -39,6 +40,8 @@ public class ProfileService {
     PasswordHistoryDao passwordHistoryDao;
     @EJB
     UserDao userDao;
+    @EJB
+    UserConvertor userConvertor;
     @EJB
     UsersDataDao usersDataDao;
     @PersistenceContext(unitName = "primary")
@@ -80,7 +83,6 @@ public class ProfileService {
 
     public Status reset(Long id) {
         try {
-            Status status = new Status();
             User user = userDao.userFindByUserDataId(id);
             if (user == null) {
                 return statusInit.singleErrorInit("User Not Found", "User Not Found");
@@ -95,7 +97,7 @@ public class ProfileService {
             PasswordHistory passwordHistory = passwordHistoryDao.listByUserId(null, null, user.getId()).get(0);
             passwordHistory.setIsPasswordChanged(false);
             passwordHistoryDao.update(passwordHistory);
-            return statusInit.singleSuccessInit("Password reset successful", "Pasword reset to " + newPass);
+            return statusInit.singleSuccessInit("Pasword reset to " + newPass);
         } catch (Exception E) {
             return statusInit.singleErrorInit("Unable to Reset Password", "Unable to Reset Password");
         }
