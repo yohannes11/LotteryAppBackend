@@ -30,13 +30,8 @@ public class UserManagementEndPoint {
 
     @EJB
     UserManagement userManagement;
-    @EJB
-    StatusInit statusInit;
     @Context
     SecurityContext securityContext;
-    @Inject
-    UserService userService;
-
 
     @Path("addUser")
     @POST
@@ -46,7 +41,6 @@ public class UserManagementEndPoint {
     @ApiOperation(value = "ADMIN", notes = "this will add user")
     public RegisterUserOut addUser(RegisterUserIn registerUserIn) {
         try {
-            Principal principal = this.securityContext.getUserPrincipal();
             return this.userManagement.addUser(registerUserIn);
         } catch (Exception e) {
             throw new AuthenticationException("unknown error occurred while adding user");

@@ -4,7 +4,8 @@ package com.cassiomolin.security.service;
 import com.cassiomolin.security.exception.AuthenticationException;
 import com.cassiomolin.user.domain.User;
 import com.cassiomolin.user.service.UserService;
-import et.com.act.unicashSchool.services.loginAttemptServices;
+import et.com.Lottery.service.loginAttemptServices;
+
 
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
@@ -24,7 +25,7 @@ public class UsernamePasswordValidator {
     @Inject
     private PasswordEncoder passwordEncoder;
     @EJB
-    loginAttemptServices loginAttemptServices;
+    et.com.Lottery.service.loginAttemptServices loginAttemptServices;
 
     /**
      * Validate username and password.
