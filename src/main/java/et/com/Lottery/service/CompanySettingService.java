@@ -56,6 +56,7 @@ CompanySettingService {
                 companySettingOut.setCompanySetting(companySetting);
                 companySettingOutList.add(companySettingOut);
             });
+            companySettingLisitOut.setCompanySettingList(companySettingOutList);
             companySettingLisitOut.setCount(companySettingDao.listAll(null, null).size());
             companySettingLisitOut.setStatus(statusInit.successful());
             return companySettingLisitOut;

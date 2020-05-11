@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Stateless
 public class CompanySettingDao {
-    @PersistenceContext(unitName = "primary")
+    @PersistenceContext(unitName = "LotteryApp-persistence-unit")
     private EntityManager em;
 
     public void create(CompanySetting entity) {

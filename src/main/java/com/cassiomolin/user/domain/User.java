@@ -12,18 +12,17 @@ import java.util.Set;
  * @author cassiomolin
  */
 @Entity
-@Table(name="user")
+@Table(name= "users"   ,schema="public")
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column (name="userData")
+    @Column(name = "userData")
     private Long userData;
-    
-   
-	@Column(unique = true, nullable = false)
+
+
+    @Column(unique = true, nullable = false)
     private String username;
 
     @Column(nullable = false)
@@ -31,7 +30,7 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private boolean active;
-    @Column (name="userGroup")
+    @Column(name = "userGroup")
     private Long userGroup;
 
     @ElementCollection(targetClass = Authority.class, fetch = FetchType.EAGER)
@@ -52,14 +51,14 @@ public class User implements Serializable {
     }
 
     public Long getUserGroup() {
-	return userGroup;
+        return userGroup;
     }
 
     public void setUserGroup(Long userGroup) {
         this.userGroup = userGroup;
     }
 
-	public void setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -86,13 +85,14 @@ public class User implements Serializable {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
-    public Long getUserData() {
-		return userData;
-	}
 
-	public void setUserData(Long customer) {
-		this.userData = customer;
-	}
+    public Long getUserData() {
+        return userData;
+    }
+
+    public void setUserData(Long customer) {
+        this.userData = customer;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Stateless
 public class FailedLoginAttemtDao {
-    @PersistenceContext(unitName = "primary")
+    @PersistenceContext(unitName = "LotteryApp-persistence-unit")
     private EntityManager em;
 
     public void create(FailedLoginAtempt entity) {

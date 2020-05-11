@@ -6,6 +6,7 @@ import com.cassiomolin.user.domain.User;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @Stateless
 public class UserDao {
-    @PersistenceContext(unitName = "primary")
+    @PersistenceContext(unitName = "LotteryApp-persistence-unit", type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
 
     public void create(User entity) {

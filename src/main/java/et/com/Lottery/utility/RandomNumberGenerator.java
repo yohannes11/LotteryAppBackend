@@ -12,7 +12,7 @@ public  class RandomNumberGenerator {
     public RandomNumberGenerator() {
     }
 
-    @PersistenceContext(unitName = "primary", type = PersistenceContextType.TRANSACTION)
+    @PersistenceContext(unitName = "LotteryApp-persistence-unit", type = PersistenceContextType.TRANSACTION)
     EntityManager em;
 	//pass the number of digits and this function will return a random integer of the specified length
 	//it can gnerate 10 digits max

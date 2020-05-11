@@ -44,7 +44,7 @@ public class ProfileService {
     UserConvertor userConvertor;
     @EJB
     UsersDataDao usersDataDao;
-    @PersistenceContext(unitName = "primary")
+    @PersistenceContext(unitName = "LotteryApp-persistence-unit")
     private EntityManager em;
 
     public ProfileOut viewProfile(User user) {

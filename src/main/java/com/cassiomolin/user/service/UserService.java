@@ -1,7 +1,9 @@
 package com.cassiomolin.user.service;
 
 import com.cassiomolin.user.domain.User;
+import et.com.Lottery.dao.UserDao;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,8 +18,9 @@ import java.util.Optional;
  */
 @ApplicationScoped
 public class UserService {
-
-	@PersistenceContext(unitName = "primary", type = PersistenceContextType.TRANSACTION)
+    @EJB
+    UserDao userDao;
+    @PersistenceContext(unitName = "LotteryApp-persistence-unit", type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
 
     /**
@@ -27,14 +30,11 @@ public class UserService {
      * @return
      */
     public User findByUsernameOrEmail(String identifier) {
-        List<User> users = em.createQuery("SELECT u FROM User u WHERE u.username = :identifier", User.class)
-                .setParameter("identifier", identifier)
-                .setMaxResults(1)
-                .getResultList();
-        if (users.isEmpty()) {
+        User user = userDao.findUserByUserName(identifier);
+        if (user == null) {
             return null;
         }
-        return users.get(0);
+        return user;
     }
 
     /**
