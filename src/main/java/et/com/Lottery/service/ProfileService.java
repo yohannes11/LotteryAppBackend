@@ -22,6 +22,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 @Stateless
 public class ProfileService {
@@ -30,8 +31,7 @@ public class ProfileService {
     RandomNumberGenerator randomNumberGenerator;
     @EJB
     UserValidator userValidator;
-    @Inject
-    UserService userService;
+
     @Inject
     PasswordEncoder passwordEncoder;
     @EJB

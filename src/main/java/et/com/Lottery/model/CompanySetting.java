@@ -41,8 +41,6 @@ public class CompanySetting implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-
-
     @Column(name = "id", unique = true, nullable = false)
     public Long getId() {
         return this.id;

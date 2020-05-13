@@ -15,12 +15,17 @@ import et.com.Lottery.utility.StatusInit;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
 @Stateless
 public class UserConvertor {
+    @PersistenceContext(unitName = "LotteryApp-persistence-unit", type = PersistenceContextType.TRANSACTION)
+    private EntityManager em;
     @EJB
     UserDao userDao;
     @EJB
@@ -30,15 +35,19 @@ public class UserConvertor {
     @EJB
     StatusInit statusInit;
 
+
     public ProfileOut userToProfileOut(User user) {
         ProfileOut profileOut = new ProfileOut();
         UsersData userData = new UsersData();
+        profileOut.setUserName(user.getUsername());
+        profileOut.setAuthorities(user.getAuthorities().iterator().next().toString());
         UsersData usersData = usersDataDao.findById(user.getUserData());
         userData.setId(usersData.getId());
         userData.setEmail(usersData.getEmail());
         userData.setFirstName(usersData.getFirstName());
         userData.setLastName(usersData.getLastName());
         userData.setPhoneNumber(usersData.getPhoneNumber());
+        profileOut.setUserData(userData);
         profileOut.setStatus(statusInit.successful());
         return profileOut;
     }
@@ -81,8 +90,10 @@ public class UserConvertor {
 
     public UserOut userToUserOut(User user) {
         UserOut userOut = new UserOut();
+        user.setPassword("");
         userOut.setUser(user);
         userOut.setUsersData(usersDataDao.findById(user.getUserData()));
+        em.detach(user);
         return userOut;
     }
 

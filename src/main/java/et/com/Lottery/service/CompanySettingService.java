@@ -20,28 +20,23 @@ CompanySettingService {
     @EJB
     StatusInit statusInit;
 
-    public CompanySettingOut addSetting(CompanySetting companySetting) {
-        CompanySettingOut companySettingOut = new CompanySettingOut();
+    public Status addSetting(CompanySetting companySetting) {
         try {
+            companySetting.setId(null);
             companySettingDao.create(companySetting);
-            companySettingOut.setStatus(statusInit.successfullyAdded());
-            return companySettingOut;
+            return statusInit.successfullyAdded();
         } catch (Exception e) {
-            companySettingOut.setStatus(statusInit.unknownErrorInit());
-            return companySettingOut;
+            return statusInit.unknownErrorInit();
         }
     }
 
-    public CompanySettingOut updateSetting(CompanySetting companySetting) {
-        CompanySettingOut companySettingOuts = new CompanySettingOut();
+    public Status updateSetting(CompanySetting companySetting) {
         try {
             companySettingDao.update(companySetting);
-            companySettingOuts.setStatus(statusInit.successfullyUpdated());
-            return companySettingOuts;
+            return statusInit.successful();
 
         } catch (Exception e) {
-            companySettingOuts.setStatus(statusInit.unknownErrorInit());
-            return companySettingOuts;
+            return statusInit.unknownErrorInit();
         }
 
     }

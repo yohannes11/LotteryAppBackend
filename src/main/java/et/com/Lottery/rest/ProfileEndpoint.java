@@ -39,8 +39,9 @@ public class ProfileEndpoint {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "PERMITED TO All", notes = "thi will show user Profile")
     @PermitAll
-    public ProfileOut viewProfile(){
+    public ProfileOut viewProfile() {
         try {
+
             Principal principal = this.securityContext.getUserPrincipal();
             User user = this.userService.findByUsernameOrEmail(principal.getName());
             return this.profile.viewProfile(user);
@@ -48,13 +49,14 @@ public class ProfileEndpoint {
             throw new AuthenticationException("You should logged in fist.");
         }
     }
+
     @Path("editProfile")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value =  "Permited To All", notes = "this will edit profile data with the provided data")
+    @ApiOperation(value = "Permited To All", notes = "this will edit profile data with the provided data")
     @PermitAll
-    public Status editProfile(UsersData userData ){
+    public Status editProfile(UsersData userData) {
         try {
             Principal principal = securityContext.getUserPrincipal();
             User user = this.userService.findByUsernameOrEmail(principal.getName());
@@ -63,13 +65,14 @@ public class ProfileEndpoint {
             throw new AuthenticationException("You should logged in fist.");
         }
     }
+
     @Path("changePassword")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "PERMITED TO All", notes = "this will change user Password")
     @PermitAll
-    public Status changePassword(ChangePasswordIn changePasswordIn){
+    public Status changePassword(ChangePasswordIn changePasswordIn) {
         try {
             Principal principal = this.securityContext.getUserPrincipal();
             User user = this.userService.findByUsernameOrEmail(principal.getName());
@@ -77,14 +80,5 @@ public class ProfileEndpoint {
         } catch (Exception e) {
             throw new AuthenticationException("You should logged in fist.");
         }
-    }
-    @Path("resetPassword")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "ALLOWED TO ADMIN", notes = "RESETS PASSWORD GIVEN USER ID")
-    @RolesAllowed("ADMIN")
-    public Status resetPassword(@QueryParam("userId") Long userId) {
-        return this.profile.reset(userId);
     }
 }

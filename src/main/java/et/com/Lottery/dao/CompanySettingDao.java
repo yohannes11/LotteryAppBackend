@@ -1,7 +1,6 @@
 package et.com.Lottery.dao;
 
 
-
 import et.com.Lottery.model.CompanySetting;
 
 import javax.ejb.Stateless;
@@ -52,12 +51,12 @@ public class CompanySettingDao {
 
     public CompanySetting findByName(String name) {
         TypedQuery<CompanySetting> findAllQuery = em.createQuery(
-                "SELECT DISTINCT c FROM CompanySetting c WHERE c.name=:name ORDER BY c.id",
+                "SELECT DISTINCT c FROM CompanySetting c WHERE c.name = :settingName ORDER BY c.id",
                 CompanySetting.class);
-        findAllQuery.setParameter("name",name);
+        findAllQuery.setParameter("settingName", name);
 
         if (findAllQuery.getResultList().isEmpty()) {
-            return new CompanySetting();
+            return null;
 
         } else {
             return findAllQuery.getResultList().get(0);

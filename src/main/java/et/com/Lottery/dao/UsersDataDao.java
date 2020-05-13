@@ -57,9 +57,9 @@ public class UsersDataDao {
                 createQuery("SELECT DISTINCT c FROM UsersData c " +
                         "left join User u on u.userData=c.id " +
                         "where c.phoneNumber like:tel or " +
-                        "soundex(u.username) = soundex(:username) or " +
-                        " soundex(c.firstName) = soundex(:fname) or " +
-                        "soundex(c.lastName) = soundex(:lname) ORDER BY c.id DESC", UsersData.class);
+                        " SIMILARITY(u.username,:username) > 0.5  or " +
+                        " SIMILARITY(c.firstName,:fname) > 0.5 or " +
+                        " SIMILARITY(c.lastName,:lname) > 0.5 ORDER BY c.id DESC", UsersData.class);
         query.setParameter("fname", parameter);
         query.setParameter("username", parameter);
         query.setParameter("lname", parameter);

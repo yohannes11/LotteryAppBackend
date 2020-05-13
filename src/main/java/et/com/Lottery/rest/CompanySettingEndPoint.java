@@ -29,9 +29,8 @@ public class CompanySettingEndPoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "", notes = "")
-    @RolesAllowed({"ACTUSER"})
     @Path("/add")
-    public CompanySettingOut addSetting(CompanySetting companySetting) {
+    public Status addSetting(CompanySetting companySetting) {
         return companySettingService.addSetting(companySetting);
     }
 
@@ -39,9 +38,9 @@ public class CompanySettingEndPoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "", notes = "")
-    @RolesAllowed({"ACTUSER"})
     @Path("/update")
-    public CompanySettingOut updateSetting(CompanySetting companySetting) {
+    public Status updateSetting(CompanySetting companySetting) {
+        System.out.println("===>"+companySetting);
         return companySettingService.updateSetting(companySetting);
     }
 
@@ -57,23 +56,22 @@ public class CompanySettingEndPoint {
         return companySettingService.listCompanySetting(start, max);
     }
 
-    @DELETE
+    @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "", notes = "")
-    @RolesAllowed({"ACTUSER"})
     @Path("/delete")
-    public Status deleteSetting(Long id) {
+    public Status deleteSetting(@QueryParam("id") Long id) {
         return companySettingService.deleteSetting(id);
     }
 
-    @POST
+    @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "", notes = "")
     @PermitAll
     @Path("/search")
-    public CompanySettingOut findSetting(String name) {
+    public CompanySettingOut findSetting(@QueryParam("name") String name) {
         return companySettingService.searchSetting(name);
     }
 

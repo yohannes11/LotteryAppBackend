@@ -33,12 +33,10 @@ public class UserManagement {
     @EJB
     DataTypeConvertor dataTypeConvertor;
 
-    public RegisterUserOut addUser(RegisterUserIn registerUserIn) {
-        RegisterUserOut registerUserOut = new RegisterUserOut();
+    public Status addUser(RegisterUserIn registerUserIn) {
         Status status = userValidator.registrationValidator(registerUserIn);
         if (!status.isStatus()) {
-            registerUserOut.setStatus(status);
-            return registerUserOut;
+            return status;
         }
         UsersData usersData = userConvertor.registrationInToUsersData(registerUserIn);
         User user = userConvertor.registrationInToUser(registerUserIn);
@@ -47,14 +45,11 @@ public class UserManagement {
         user.setUserGroup(registerUserIn.getGroup());
         user.setActive(true);
         this.userDao.create(user);
-        registerUserOut.setId(userDataReturned.getId());
-        registerUserOut.setRegisterUserIn(registerUserIn);
-        registerUserOut.setStatus(statusInit.successfullyAdded());
-        return registerUserOut;
+        return statusInit.successful();
     }
 
     public Status userActivation(Long id, boolean activation) {
-        User user = this.userDao.userFindByUserDataId(id);
+        User user = this.userDao.findById(id);
         if (user == null) {
             return statusInit.emptyErrorInit();
 

@@ -39,7 +39,7 @@ public class UserManagementEndPoint {
     @Produces(MediaType.APPLICATION_JSON)
     @PermitAll
     @ApiOperation(value = "ADMIN", notes = "this will add user")
-    public RegisterUserOut addUser(RegisterUserIn registerUserIn) {
+    public Status addUser(RegisterUserIn registerUserIn) {
         try {
             return this.userManagement.addUser(registerUserIn);
         } catch (Exception e) {
@@ -48,32 +48,17 @@ public class UserManagementEndPoint {
     }
 
 
-    @Path("deactivateUser")
+    @Path("activateUser")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "{\"ADMIN\"}", notes = "activate user using parameter user <id>")
     @RolesAllowed({"ADMIN", "USER"})
-    public Status deactivateUser(@QueryParam("id") Long id) {
+    public Status activateUser(@QueryParam("id") Long id, @QueryParam("activate") Boolean activate) {
         try {
-            return this.userManagement.userActivation(id, false);
+            return this.userManagement.userActivation(id, activate);
         } catch (Exception e) {
             throw new AuthenticationException("Unknown error occured while deactivating user");
-        }
-    }
-
-    @Path("activateUser")
-    @GET
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "{\"ADMIN\"}", notes = "deactivate user using parameter user <id>")
-    @RolesAllowed({"ADMIN", "USER"})
-    public Status activateUser(@QueryParam("id") Long id) {
-        try {
-
-            return this.userManagement.userActivation(id, true);
-        } catch (Exception e) {
-            throw new AuthenticationException("Unknown error occured while activating user.");
         }
     }
 
